@@ -1,0 +1,21 @@
+{
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-property-sort-order-smacss",
+		"stylelint-config-prettier"
+	],
+	"defaultSeverity": "warning",
+	"rules": {
+		"indentation": "tab",
+		"rule-empty-line-before": [
+			"always-multi-line",
+			{
+				"ignore": [
+					"after-comment",
+					"first-nested",
+					"inside-block"
+				]
+			}
+		]
+	}
+}
