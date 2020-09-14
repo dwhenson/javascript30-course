@@ -1,21 +1,24 @@
 // Avoid global scope
 (function () {
-	/* ==========  Variables  ========== */
-	const keys = [...document.querySelectorAll("div[data-key]")];
-
 	/* ==========  Functions  ========== */
-	function keyDownHandler(event) {
-		keys.forEach((key) => {
-			if (!event.which === parseInt(key.getAttribute("data-key"), 10)) return;
-			document.querySelector([`audio[data-key="${event.which}"]`]).play();
-			const drum = document.querySelector([`div[data-key="${event.which}"]`]);
-			drum.classList.add("playing");
-			setTimeout(() => {
-				drum.classList.remove("playing");
-			}, 70);
-		});
+	const keys = document.querySelector(".keys");
+	function keyHandler(event) {
+		const audio = document.querySelector([`audio[data-key="${event.which}"]`]);
+		if (!audio) return;
+		audio.currentTime = 0;
+		audio.play();
+
+		const key = document.querySelector([`div[data-key="${event.which}"]`]);
+		key.classList.add("playing");
 	}
 
-	/* ==========  Inits and Event Listeners  ========== */
-	document.addEventListener("keydown", keyDownHandler);
+	function removeTransition(event) {
+		if (!event.propertyName === "transform") return;
+
+		event.target.classList.remove("playing");
+	}
+
+	/*= =======  Inits and Event Listeners  ========== */
+	document.addEventListener("keydown", keyHandler);
+	keys.addEventListener("transitionend", removeTransition);
 })();
