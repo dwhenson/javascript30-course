@@ -4,17 +4,15 @@
 	const keys = document.querySelector(".keys");
 	function keyHandler(event) {
 		const audio = document.querySelector([`audio[data-key="${event.which}"]`]);
+		const key = document.querySelector([`div[data-key="${event.which}"]`]);
 		if (!audio) return;
 		audio.currentTime = 0;
 		audio.play();
-
-		const key = document.querySelector([`div[data-key="${event.which}"]`]);
 		key.classList.add("playing");
 	}
 
 	function removeTransition(event) {
 		if (!event.propertyName === "transform") return;
-
 		event.target.classList.remove("playing");
 	}
 
