@@ -38,5 +38,12 @@ body {
 	top: 50%;
 	width: 50%;
 	height: 6px;
+<<<<<<< Updated upstream
+=======
+	transform: rotate(90deg);
+	transform-origin: 100%;
+	transition: all 0.5s;
+	transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+>>>>>>> Stashed changes
 	background: black;
 }
