@@ -13,6 +13,25 @@ const inventors = [
 	{ first: "Hanna", last: "Hammarström", year: 1829, passed: 1909 },
 ];
 
+// 1. Filter the list of inventors for those who were born in the 1500's
+const filtered = inventors.filter((inventor) => inventor.year > 1500);
+
+// 2. Give us an array of the inventors first and last names
+const mapped = inventors.map((inventor) => `${inventor.first} ${inventor.last}`);
+
+// 3. Sort the inventors by birthdate, oldest to youngest
+const sorted = inventors.sort((a, b) => a.year - b.year);
+
+// 4. How many years did all the inventors live all together?
+const yearsLived = inventors.map((obj) => ({ ...obj, life: obj.passed - obj.year }));
+const reduced = yearsLived.reduce((total, current) => total + current.life, 0);
+
+// 5. Sort the inventors by years lived
+const sortedAge = yearsLived.sort((a, b) => a.life - b.life);
+
+// 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
+// https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
 const people = [
 	"Beck, Glenn",
 	"Becker, Carl",
@@ -57,31 +76,9 @@ const people = [
 	"Blake, William",
 ];
 
-
-testing with tower gui
-
-
-// Array.prototype.filter()
-// 1. Filter the list of inventors for those who were born in the 1500's
-
-// Array.prototype.map()
-// 2. Give us an array of the inventors first and last names
-
-// Array.prototype.sort()
-// 3. Sort the inventors by birthdate, oldest to youngest
-
-// Array.prototype.reduce()
-// 4. How many years did all the inventors live all together?
-
-// 5. Sort the inventors by years lived
-
-// 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
-// https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
-// 7. sort Exercise
 // Sort the people alphabetically by last name
+const alphabet = people.sort((a, b) => a[1] - b[1]);
 
-// 8. Reduce Exercise
 // Sum up the instances of each of these
 const data = [
 	"car",
