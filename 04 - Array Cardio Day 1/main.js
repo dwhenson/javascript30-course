@@ -31,6 +31,17 @@ const sortedAge = yearsLived.sort((a, b) => a.life - b.life);
 
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+const streets = [
+	"Boulevard des Capucines",
+	"Boulevard de la Chapelle",
+	"Boulevard de Clichy",
+	"Boulevard du Crime",
+	"Boulevard Marguerite-de-Rochechouart",
+	"Boulevard Montmartre",
+	"Boulevard du Montparnasse",
+];
+
+const de = streets.filter((street) => street.includes(" de "));
 
 const people = [
 	"Beck, Glenn",
@@ -77,7 +88,7 @@ const people = [
 ];
 
 // Sort the people alphabetically by last name
-const alphabet = people.sort((a, b) => a[1] - b[1]);
+const alphabet = people.sort((a, b) => a[1] - b[1]); // ?
 
 // Sum up the instances of each of these
 const data = [
