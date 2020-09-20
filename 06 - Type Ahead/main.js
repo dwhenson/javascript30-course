@@ -5,11 +5,15 @@ const endpoint =
 
 const input = document.querySelector(".search");
 const suggestions = document.querySelector(".suggestions");
-
 let locations = [];
 
 /* ==========  Functions  ========== */
 
+/**
+ * Renders the filtered data to HTML
+ * @param   {Array}  results  The filtered array
+ * @return  {String}           The HTML to render
+ */
 function renderHTML(results) {
 	suggestions.innerHTML = results
 		.map(
@@ -21,6 +25,10 @@ function renderHTML(results) {
 		.join("");
 }
 
+/**
+ * Filter the array by user entered input value
+ * @return  {Array}  The array filtered according to seach inputs
+ */
 function filterResults() {
 	const searchTerm = input.value.toLowerCase();
 	const filtered = locations.filter(
@@ -31,6 +39,10 @@ function filterResults() {
 	renderHTML(filtered);
 }
 
+/**
+ * fetch data from endpoint provided
+ * @return  {Array}  An array of city objects
+ */
 async function getData() {
 	const data = await fetch(endpoint);
 	const response = await data.json();
