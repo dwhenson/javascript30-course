@@ -1,9 +1,3 @@
-// TODO
-// Separate cities and states
-// Results toLowerCase()
-// Select desired result
-// Show population
-
 /* ==========  Variables  ========== */
 const endpoint =
 	// eslint-disable-next-line max-len
@@ -11,7 +5,6 @@ const endpoint =
 
 const input = document.querySelector(".search");
 const suggestions = document.querySelector(".suggestions");
-const population = document.querySelector("span.population");
 
 let locations = [];
 
@@ -21,16 +14,19 @@ function renderHTML(results) {
 	suggestions.innerHTML = results
 		.map(
 			(result) => `
-		<li>${result.city}</li>
-		<li>${result.state}</li>`
+				<li>${result.city}, ${result.state}
+				<span class="population">${parseInt(result.population, 10).toLocaleString()}</span>
+				</li>`
 		)
 		.join("");
 }
 
 function filterResults() {
-	const searchTerm = input.value;
+	const searchTerm = input.value.toLowerCase();
 	const filtered = locations.filter(
-		(location) => location.city.includes(searchTerm) || location.state.includes(searchTerm)
+		(location) =>
+			location.city.toLowerCase().includes(searchTerm) ||
+			location.state.toLowerCase().includes(searchTerm)
 	);
 	renderHTML(filtered);
 }
