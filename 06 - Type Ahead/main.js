@@ -5,7 +5,7 @@ const endpoint =
 
 const input = document.querySelector(".search");
 const suggestions = document.querySelector(".suggestions");
-let locations = [];
+const locations = [];
 
 /* ==========  Functions  ========== */
 
@@ -14,14 +14,18 @@ let locations = [];
  * @param   {Array}  results  The filtered array
  * @return  {String}           The HTML to render
  */
-function renderHTML(results) {
+function renderHTML(results, value) {
 	suggestions.innerHTML = results
-		.map(
-			(result) => `
-				<li>${result.city}, ${result.state}
-				<span class="population">${parseInt(result.population, 10).toLocaleString()}</span>
-				</li>`
-		)
+		.map((result) => {
+			const regex = new RegExp(value, "gi");
+			const cityName = result.city.replace(regex, `<span class="hl">${value}</span>`);
+			const stateName = result.city.replace(regex, `<span class="hl">${value}</span>`);
+			return `
+				<li>
+				<span>${cityName}, ${stateName}</span>
+				<span class="popn">${parseInt(result.population, 10).toLocaleString()}</span>
+				</li>`;
+		})
 		.join("");
 }
 
@@ -36,7 +40,7 @@ function filterResults() {
 			location.city.toLowerCase().includes(searchTerm) ||
 			location.state.toLowerCase().includes(searchTerm)
 	);
-	renderHTML(filtered);
+	renderHTML(filtered, searchTerm);
 }
 
 /**
@@ -46,11 +50,12 @@ function filterResults() {
 async function getData() {
 	const data = await fetch(endpoint);
 	const response = await data.json();
-	locations = response;
+	locations.push(...response);
 }
 
 function handleError() {
 	console.warn("Oh no, got an error!");
+	suggestions.innerHTML = `<p>Sorry we messed up. Can you try again later?</p>`;
 }
 /* ==========  Inits and Event Listeners  ========== */
 getData().catch(handleError);
