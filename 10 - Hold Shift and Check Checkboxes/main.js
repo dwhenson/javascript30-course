@@ -12,6 +12,7 @@ let lastClicked;
  * @return  {Number}         The index of the checkbox checked
  */
 function setLastClicked(event) {
+	if (!event.target.type === "checkbox") return;
 	inputs.forEach((element, index) => {
 		if (element === event.target) {
 			lastClicked = index;
@@ -37,6 +38,8 @@ function checkInputs(toCheck) {
  * @return  {Object}         Passes the sliced array of checkboxes to checkInputs
  */
 function mouseClickHandler(event) {
+	if (!event.target.type === "checkbox") return;
+
 	inputs.forEach((element, index) => {
 		if (element === event.target) {
 			// creates array based on indexes of lastClicked and 'element'
