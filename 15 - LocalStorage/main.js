@@ -2,7 +2,7 @@
 const itemsList = document.querySelector(".plates");
 const item = document.querySelector("[name = 'item']");
 const addItems = document.querySelector(".add-items");
-const items = [];
+let items;
 const storedPrefix = "storedItems";
 
 /* ==========  Functions  ========== */
@@ -18,25 +18,27 @@ function renderHTML(itemsToRender) {
 function updateStorage(itemToAdd) {
 	let existing = localStorage.getItem(storedPrefix);
 	existing = existing ? existing.split(",") : [];
-	existing.push(itemToAdd);
-	localStorage.setItem(storedPrefix, existing.toString());
+	items = existing;
+	items.push(itemToAdd);
+	renderHTML(items);
+	localStorage.setItem(storedPrefix, items.toString());
 }
 
 function clickHandler(event) {
 	event.preventDefault();
-	if (event.target.type !== "submit") return;
+	if (!event.target.closest(".add-items")) return;
 	if (!item.value) return;
-	// items.push(item.value);
-	renderHTML(items);
 	updateStorage(item.value);
 	item.value = "";
 }
 
 function loadItems() {
-	const savedItems = localStorage.getItem(storedPrefix).split(",");
+	let savedItems = localStorage.getItem(storedPrefix);
+	if (!savedItems) return;
+	savedItems = savedItems ? savedItems.split(",") : [];
 	renderHTML(savedItems);
 }
 
 /* ==========  Inits and Event Listeners  ========== */
 loadItems();
-addItems.addEventListener("click", clickHandler);
+addItems.addEventListener("submit", clickHandler);
