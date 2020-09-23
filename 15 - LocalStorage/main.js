@@ -5,6 +5,12 @@ const addItems = document.querySelector(".add-items");
 const storedPrefix = "storedItems";
 
 /* ==========  Functions  ========== */
+/**
+ * Renders the user entered data to HTML
+ * @param   {Array}  itemsToRender   An array of objects containing user entered data
+ * @param   {Object} insertLocation  The element to insert the user entered data
+ * @return  {String}                  The HTML to render
+ */
 function renderHTML(itemsToRender, insertLocation) {
 	insertLocation.innerHTML = itemsToRender
 		.map((listItem, index) => {
@@ -49,6 +55,11 @@ function clickHandler(event) {
 	localStorage.setItem(storedPrefix, JSON.stringify(data));
 }
 
+/**
+ * Handles the submit event
+ * @param   {Object}  event  The event object
+ * @return  {Object}         Calls updateStorage and passes the user inputted data
+ */
 function submitHandler(event) {
 	event.preventDefault();
 	if (!event.target.closest(".add-items")) return;
@@ -57,6 +68,10 @@ function submitHandler(event) {
 	addItems.reset();
 }
 
+/**
+ * Gets items from localStorage
+ * @return  {Object}  Calls renderHTML with items from localStorage and the element to insert them
+ */
 function loadItems() {
 	let savedItems = localStorage.getItem(storedPrefix);
 	if (!savedItems) return;
