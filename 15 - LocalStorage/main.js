@@ -6,19 +6,23 @@ const storedPrefix = "storedItems";
 
 /* ==========  Functions  ========== */
 function renderHTML(itemsToRender) {
-	itemsList.innerHTML = itemsToRender
-		.map((itemToRender) => {
-			return `<li>${itemToRender}</li>`;
+	itemsList.innerHTML = Object.entries(itemsToRender)
+		.map(([key, value]) => {
+			console.log([key, value]);
+			return `<li>${key}</li>`;
 		})
 		.join("");
 }
 
 function updateStorage(itemToAdd) {
 	let existing = localStorage.getItem(storedPrefix);
-	existing = existing ? existing.split(",") : [];
-	existing.push(itemToAdd);
+	existing = existing ? JSON.parse(existing) : {};
+	existing[itemToAdd] = {
+		type: itemToAdd,
+		checkbox: false,
+	};
 	renderHTML(existing);
-	localStorage.setItem(storedPrefix, existing.toString());
+	localStorage.setItem(storedPrefix, JSON.stringify(existing));
 }
 
 function submitHandler(event) {
@@ -32,7 +36,7 @@ function submitHandler(event) {
 function loadItems() {
 	let savedItems = localStorage.getItem(storedPrefix);
 	if (!savedItems) return;
-	savedItems = savedItems ? savedItems.split(",") : [];
+	savedItems = savedItems ? JSON.parse(savedItems) : {};
 	renderHTML(savedItems);
 }
 
