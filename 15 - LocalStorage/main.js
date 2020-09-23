@@ -10,7 +10,7 @@ function renderHTML(itemsToRender, insertLocation) {
 		.map((listItem, index) => {
 			return `
 				<li>
-					<input type="checkbox" data-name=${index} id="item${index}"
+					<input type="checkbox" data-index=${index} id="item${index}"
 					${listItem.done ? "checked" : ""} />
         			<label for="item${index}">${listItem.text}</label>
 				</li>`;
@@ -18,6 +18,10 @@ function renderHTML(itemsToRender, insertLocation) {
 		.join("");
 }
 
+/**
+ * Updates localStorage with the user entered data
+ * @param   {String}  itemValue  The text to add to localStorage
+ */
 function updateStorage(itemValue) {
 	let data = localStorage.getItem(storedPrefix);
 	data = data ? JSON.parse(data) : [];
@@ -30,16 +34,17 @@ function updateStorage(itemValue) {
 	localStorage.setItem(storedPrefix, JSON.stringify(data));
 }
 
+/**
+ * Handles the click event to toggle checkbox status (save to localStorage and render in HTML)
+ * @param   {Object}  event  The event object
+ * @return  {Object}         Calls renderHTML and passes user data and element to insert data
+ */
 function clickHandler(event) {
+	if (!event.target.matches("input")) return;
+	const { index } = event.target.dataset;
 	let data = localStorage.getItem(storedPrefix);
 	data = data ? JSON.parse(data) : [];
-	const index = event.target.getAttribute("data-name");
-	if (!data[index]) return;
-	if (data[index].done) {
-		data[index].done = false;
-	} else {
-		data[index].done = true;
-	}
+	data[index].done = !data[index].done;
 	renderHTML(data, itemsList);
 	localStorage.setItem(storedPrefix, JSON.stringify(data));
 }
