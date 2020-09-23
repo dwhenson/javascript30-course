@@ -1,3 +1,8 @@
+// TODO
+// add button to clear all and set local storage
+// add button to check all and add to local storage
+// add button to delete all and clear local storage
+
 /* ==========  Variables  ========== */
 const itemsList = document.querySelector(".plates");
 const item = document.querySelector("[name = 'item']");
